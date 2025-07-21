@@ -1,0 +1,90 @@
+﻿@model prjECommerceDemo.Models.TCustomer
+
+@{
+    ViewData["Title"] = "編輯會員";
+}
+
+<h2>編輯會員</h2>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            @* 主鍵 FId 當隱藏欄位保留 *@
+            <input asp-for="FId" type="hidden" />
+
+            <div class="form-group">
+                <label asp-for="FName" class="control-label"></label>
+                <input asp-for="FName" class="form-control" />
+                <span asp-validation-for="FName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="FPhone" class="control-label"></label>
+                <input asp-for="FPhone" class="form-control" />
+                <span asp-validation-for="FPhone" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="FEmail" class="control-label"></label>
+                <input asp-for="FEmail" class="form-control" />
+                <span asp-validation-for="FEmail" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="FAccount" class="control-label"></label>
+                <input asp-for="FAccount" class="form-control" />
+                <span asp-validation-for="FAccount" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="FGender" class="control-label"></label>
+                <select asp-for="FGender" class="form-control">
+                    <option value="">請選擇</option>
+                    <option value="男">男</option>
+                    <option value="女">女</option>
+                </select>
+                <span asp-validation-for="FGender" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="FCity" class="control-label"></label>
+                <input asp-for="FCity" class="form-control" />
+                <span asp-validation-for="FCity" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="FDistrict" class="control-label"></label>
+                <input asp-for="FDistrict" class="form-control" />
+                <span asp-validation-for="FDistrict" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="FRoadAddress" class="control-label"></label>
+                <input asp-for="FRoadAddress" class="form-control" />
+                <span asp-validation-for="FRoadAddress" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="FIsEnabled" class="control-label"></label>
+                <select asp-for="FIsEnabled" class="form-control">
+                    <option value="true">啟用</option>
+                    <option value="false">停用</option>
+                </select>
+                <span asp-validation-for="FIsEnabled" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3">
+                <input type="submit" value="儲存變更" class="btn btn-primary" />
+                <a asp-action="List" class="btn btn-secondary">返回清單</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

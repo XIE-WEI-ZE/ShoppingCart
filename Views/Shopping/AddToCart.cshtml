@@ -1,0 +1,40 @@
+﻿@model prjECommerceDemo.ViewModel.CAddToCartViewModel
+
+@{
+    ViewData["Title"] = "加入購物車";
+    int id = ViewBag.FId ?? 0;
+}
+
+<h2 class="mb-4">加入購物車</h2>
+
+<div class="card mb-3" style="max-width: 600px;">
+    <div class="row g-0">
+        <div class="col-md-4">
+            <img src="~/images/@ViewBag.Image" class="img-fluid rounded-start" alt="商品圖片">
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title">@ViewBag.Name</h5>
+                <p class="card-text">價格：<strong class="text-danger">@ViewBag.Price 元</strong></p>
+                <p class="card-text"><small class="text-muted">庫存：@ViewBag.Qty</small></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form asp-action="AddToCart" method="post" class="mb-3">
+    <input type="hidden" asp-for="txtFId" value="@id" />
+    <div class="mb-3">
+        <label asp-for="txtCount" class="form-label">數量</label>
+        <input asp-for="txtCount" class="form-control" placeholder="請輸入購買數量" />
+        <span asp-validation-for="txtCount" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">加入購物車</button>
+    <a asp-action="List" class="btn btn-secondary ms-2">回商品列表</a>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

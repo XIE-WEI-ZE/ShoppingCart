@@ -1,0 +1,91 @@
+﻿@model prjECommerceDemo.ViewModel.CEditProfileViewModel
+
+@{
+    ViewData["Title"] = "個人資料編輯";
+}
+
+<h2 class="mb-4">編輯個人資料</h2>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["Message"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<form asp-action="EditProfile" method="post" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label asp-for="FName" class="form-label"></label>
+        <input asp-for="FName" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="FPhone" class="form-label"></label>
+        <input asp-for="FPhone" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="FEmail" class="form-label"></label>
+        <input asp-for="FEmail" class="form-control" />
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <label asp-for="FCity" class="form-label"></label>
+            <input asp-for="FCity" class="form-control" />
+        </div>
+        <div class="col-md-4">
+            <label asp-for="FDistrict" class="form-label"></label>
+            <input asp-for="FDistrict" class="form-control" />
+        </div>
+        <div class="col-md-4">
+            <label asp-for="FRoadAddress" class="form-label"></label>
+            <input asp-for="FRoadAddress" class="form-control" />
+        </div>
+    </div>
+    <div class="mb-3">
+        <label asp-for="FGender" class="form-label"></label>
+        <select asp-for="FGender" class="form-select">
+            <option value="">請選擇</option>
+            <option value="男">男</option>
+            <option value="女">女</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">生日</label>
+        <div class="d-flex gap-2">
+            <select asp-for="BirthYear" class="form-select">
+                <option value="">-- 年 --</option>
+                @for (int y = DateTime.Now.Year; y >= 1920; y--)
+                {
+                    <option value="@y">@y 年</option>
+                }
+            </select>
+            <select asp-for="BirthMonth" class="form-select">
+                <option value="">-- 月 --</option>
+                @for (int m = 1; m <= 12; m++)
+                {
+                    <option value="@m">@m 月</option>
+                }
+            </select>
+            <select asp-for="BirthDay" class="form-select">
+                <option value="">-- 日 --</option>
+                @for (int d = 1; d <= 31; d++)
+                {
+                    <option value="@d">@d 日</option>
+                }
+            </select>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Photo" class="form-label"></label>
+        <input asp-for="Photo" type="file" class="form-control" />
+        @if (!string.IsNullOrEmpty(Model.ExistingPhoto))
+        {
+            <div class="mt-2">
+                <img src="~/images/@Model.ExistingPhoto" width="100" />
+            </div>
+        }
+    </div>
+    <button type="submit" class="btn btn-primary">儲存修改</button>
+    <a asp-action="ChangePassword" class="btn btn-outline-warning ms-2">修改密碼</a>
+</form>

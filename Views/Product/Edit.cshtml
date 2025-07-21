@@ -1,0 +1,83 @@
+﻿@model prjECommerceDemo.ViewModel.CProductWrap
+
+@{
+    ViewData["Title"] = "編輯商品";
+}
+
+<h2 class="mb-4">編輯商品</h2>
+
+<form asp-action="Edit" method="post" enctype="multipart/form-data">
+    <input type="hidden" asp-for="FId" />
+
+    <div class="row">
+        <div class="col-md-6">
+
+            <div class="form-group mb-3">
+                <label asp-for="FName" class="form-label">商品名稱</label>
+                <input asp-for="FName" class="form-control" />
+                <span asp-validation-for="FName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="FQty" class="form-label">數量</label>
+                <input asp-for="FQty" class="form-control" />
+                <span asp-validation-for="FQty" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="FCost" class="form-label">成本</label>
+                <input asp-for="FCost" class="form-control" />
+                <span asp-validation-for="FCost" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="FPrice" class="form-label">售價</label>
+                <input asp-for="FPrice" class="form-control" />
+                <span asp-validation-for="FPrice" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="FDescription" class="form-label">商品描述</label>
+                <textarea asp-for="FDescription" class="form-control" rows="4"></textarea>
+                <span asp-validation-for="FDescription" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="FCategoryId" class="form-label">分類編號</label>
+                <input asp-for="FCategoryId" class="form-control" />
+                <span asp-validation-for="FCategoryId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="FIsAvailable" class="form-label">是否上架</label>
+                <select asp-for="FIsAvailable" class="form-select">
+                    <option value="true">是</option>
+                    <option value="false">否</option>
+                </select>
+                <span asp-validation-for="FIsAvailable" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label class="form-label">上傳商品圖片</label>
+                <input type="file" asp-for="photo" class="form-control" />
+            </div>
+
+            @if (!string.IsNullOrEmpty(Model.FImagePath))
+            {
+                <div class="mb-3">
+                    <label class="form-label">目前圖片預覽：</label><br />
+                    <img src="~/images/@Model.FImagePath" alt="圖片預覽" style="max-width: 200px;" />
+                </div>
+            }
+
+            <div class="form-group mt-4">
+                <button type="submit" class="btn btn-primary">儲存變更</button>
+                <a asp-action="List" class="btn btn-secondary">返回列表</a>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

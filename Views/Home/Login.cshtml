@@ -1,0 +1,47 @@
+﻿@model prjECommerceDemo.ViewModel.CLoginViewModel
+
+@{
+    ViewData["Title"] = "會員登入";
+}
+
+<h2>會員登入</h2>
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger">@ViewBag.Error</div>
+}
+
+<form asp-action="Login" method="post">
+    <div class="mb-3">
+        <label asp-for="txtAccount" class="form-label">帳號</label>
+        <input asp-for="txtAccount" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="txtPassword" class="form-label">密碼</label>
+        <input asp-for="txtPassword" class="form-control" type="password" />
+    </div>
+
+    <div class="form-check mb-3">
+        <input asp-for="RememberMe" class="form-check-input" />
+        <label asp-for="RememberMe" class="form-check-label">記住我</label>
+    </div>
+
+    <!--  加入 reCAPTCHA v2 驗證框 -->
+    @* 在向使用者顯示的 HTML 程式碼中使用這串網站金鑰。 *@
+    <div class="mb-3">
+        <div class="g-recaptcha" data-sitekey="@ViewBag.SiteKey"></div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">登入</button>
+
+    <div class="text-center mt-3">
+        <a asp-action="ForgetPassword" asp-controller="Home" class="btn btn-outline-secondary btn-sm">
+            忘記密碼？
+        </a>
+    </div>
+</form>
+
+@section Scripts {
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+}

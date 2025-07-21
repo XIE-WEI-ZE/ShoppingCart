@@ -1,0 +1,97 @@
+﻿@model IEnumerable<prjECommerceDemo.Models.TCustomer>
+
+@{
+    ViewData["Title"] = "會員列表";
+    int currentPage = (int)ViewBag.CurrentPage;
+    int totalPages = (int)ViewBag.TotalPages;
+    string keyword = ViewBag.Keyword ?? "";
+}
+
+<h2 class="mb-3">會員列表</h2>
+
+<!--  搜尋表單 -->
+@using (Html.BeginForm("List", "Customer", FormMethod.Get))
+{
+    <div class="input-group mb-3">
+        <input type="text" name="txtKeyword" class="form-control" placeholder="請輸入關鍵字查詢"
+               value="@keyword" />
+        <button type="submit" class="btn btn-primary">查詢</button>
+        <a href="@Url.Action("Create")" class="btn btn-success ms-2">新增會員</a>
+    </div>
+}
+
+<!--  資料表格 -->
+<table class="table table-bordered table-striped table-hover">
+    <thead class="table-light">
+        <tr>
+            <th>姓名</th>
+            <th>帳號</th>
+            <th>Email</th>
+            <th>電話</th>
+            <th>地址</th>
+            <th>生日</th>
+            <th>啟用狀態</th>
+            <th>功能</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            var rowClass = item.FIsEnabled == true ? "" : "table-danger";
+            <tr class="@rowClass">
+                <td>@item.FName</td>
+                <td>@item.FAccount</td>
+                <td>@item.FEmail</td>
+                <td>@item.FPhone</td>
+                <td>@item.FAddress</td>
+                <td>@item.FBirthday?.ToString("yyyy-MM-dd")</td>
+                <td>
+                    @if (item.FIsEnabled == true)
+                    {
+                        <span class="text-success">✔ 正常</span>
+                    }
+                    else
+                    {
+                        <span class="text-danger">✘ 停用</span>
+                    }
+                </td>
+                <td>
+                    <a class="btn btn-sm btn-primary" href="@Url.Action("Edit", "Customer", new { id = item.FId })">編輯</a>
+                    <a class="btn btn-sm @(item.FIsEnabled == true ? "btn-warning" : "btn-success")"
+                       href="@Url.Action("ToggleStatus", "Customer", new { id = item.FId })"
+                       onclick="return confirm('確定要@(item.FIsEnabled == true ? "停用" : "啟用")這位會員嗎？');">
+                        @(item.FIsEnabled == true ? "停用" : "啟用")
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- 📄 分頁導覽 -->
+<nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+
+        @if (currentPage > 1)
+        {
+            <li class="page-item">
+                <a class="page-link" href="@Url.Action("List", new { page = currentPage - 1, txtKeyword = keyword })">« 上一頁</a>
+            </li>
+        }
+
+        @for (int i = 1; i <= totalPages; i++)
+        {
+            <li class="page-item @(i == currentPage ? "active" : "")">
+                <a class="page-link" href="@Url.Action("List", new { page = i, txtKeyword = keyword })">@i</a>
+            </li>
+        }
+
+        @if (currentPage < totalPages)
+        {
+            <li class="page-item">
+                <a class="page-link" href="@Url.Action("List", new { page = currentPage + 1, txtKeyword = keyword })">下一頁 »</a>
+            </li>
+        }
+
+    </ul>
+</nav>

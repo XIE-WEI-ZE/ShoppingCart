@@ -1,0 +1,47 @@
+﻿<h2 class="mb-4">我的個人資訊</h2>
+
+<div class="card shadow-sm p-4" style="max-width: 800px;">
+    <div class="row">
+        <div class="col-md-4 text-center">
+            @if (!string.IsNullOrEmpty(Model.FPhoto))
+            {
+                <img src="~/images/@Model.FPhoto" class="img-thumbnail mb-3" style="max-width: 150px;" />
+            }
+            else
+            {
+                <div class="text-muted">無上傳頭像</div>
+            }
+
+            <a class="btn btn-sm btn-outline-primary mt-2" asp-action="EditProfile">編輯個人資料</a>
+            <a class="btn btn-sm btn-outline-warning mt-2" asp-action="ChangePassword">修改密碼</a>
+        </div>
+
+        <div class="col-md-8">
+            <dl class="row">
+                <dt class="col-sm-4">姓名</dt>
+                <dd class="col-sm-8">@Model.FName</dd>
+
+                <dt class="col-sm-4">性別</dt>
+                <dd class="col-sm-8">@Model.FGender</dd>
+
+                <dt class="col-sm-4">電話</dt>
+                <dd class="col-sm-8">@Model.FPhone</dd>
+
+                <dt class="col-sm-4">Email</dt>
+                <dd class="col-sm-8">@Model.FEmail</dd>
+
+                <dt class="col-sm-4">地址</dt>
+                <dd class="col-sm-8">@Model.FCity@Model.FDistrict@Model.FRoadAddress</dd>
+
+                <dt class="col-sm-4">生日</dt>
+                <dd class="col-sm-8">@Model.FBirthday?.ToString("yyyy/MM/dd")</dd>
+
+                <dt class="col-sm-4">帳號</dt>
+                <dd class="col-sm-8">@Model.FAccount</dd>
+
+                <dt class="col-sm-4">帳號建立時間</dt>
+                <dd class="col-sm-8">@Model.FCreatedDate?.ToString("yyyy/MM/dd HH:mm")</dd>
+            </dl>
+        </div>
+    </div>
+</div>

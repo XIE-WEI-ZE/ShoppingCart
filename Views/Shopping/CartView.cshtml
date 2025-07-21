@@ -1,0 +1,70 @@
+﻿@model IEnumerable<prjECommerceDemo.ViewModel.CShoppingCartItem>
+
+@{
+    ViewData["Title"] = "購物車明細";
+    int count = 0;
+    decimal sum = 0;
+    decimal tax = 0;
+    decimal pay = 0;
+}
+
+@if (TempData["message"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["message"]
+    </div>
+}
+
+<h2 class="mb-4">🛒 購物車明細</h2>
+
+<p>
+    <a class="btn btn-primary" href="@Url.Action("Checkout", "Shopping")">結帳</a>
+</p>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-warning">目前購物車沒有任何商品。</div>
+}
+else
+{
+    <table class="table table-bordered table-hover text-center">
+        <thead class="table-light">
+            <tr>
+                <th>序</th>
+                <th>商品名稱</th>
+                <th>數量</th>
+                <th>單價</th>
+                <th>小計</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                count++;
+                sum += item.小計;
+                tax = sum * 0.05M;
+                pay = sum + tax;
+                <tr>
+                    <td>@count</td>
+                    <td>@item.product.FName</td>
+                    <td>@item.count</td>
+                    <td>@item.price.ToString("C0")</td>
+                    <td>@item.小計.ToString("C0")</td>
+                    <td>
+                        <a asp-action="RemoveFromCart"
+                           asp-route-id="@item.productId"
+                           class="btn btn-sm btn-outline-danger"
+                           onclick="return confirm('確定要移除此商品？');">移除</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="mt-4">
+        <p><strong>商品總額：</strong> @sum.ToString("###,###,##0") 元</p>
+        <p><strong>稅額（5%）：</strong> @tax.ToString("###,###,##0") 元</p>
+        <p class="text-danger"><strong>應付總額：</strong> @pay.ToString("###,###,##0") 元</p>
+    </div>
+}

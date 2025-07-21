@@ -1,0 +1,61 @@
+﻿@model IEnumerable<prjECommerceDemo.ViewModel.CProductWrap>
+
+@{
+    ViewData["Title"] = "購物商城";
+}
+
+<h2 class="mb-4">商城商品列表</h2>
+
+<!--  搜尋列開始 -->
+<form method="get" class="row row-cols-lg-auto g-3 align-items-center mb-4">
+    <div class="col">
+        <input name="txtKeyword" class="form-control" placeholder="請輸入商品關鍵字" value="@(Context.Request.Query["txtKeyword"])" />
+    </div>
+    <div class="col">
+        <input name="minPrice" class="form-control" placeholder="最低價格" type="number" value="@(Context.Request.Query["minPrice"])" />
+    </div>
+    <div class="col">
+        <input name="maxPrice" class="form-control" placeholder="最高價格" type="number" value="@(Context.Request.Query["maxPrice"])" />
+    </div>
+    <div class="col">
+        <button type="submit" class="btn btn-primary">搜尋</button>
+        <a asp-action="List" class="btn btn-outline-secondary">清除</a>
+    </div>
+</form>
+
+<!--  搜尋列結束 -->
+<!--  商品列表卡片 -->
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    @foreach (var item in Model)
+    {
+        <div class="col">
+            <div class="card h-100 shadow-sm">
+                @if (!string.IsNullOrEmpty(item.FImagePath))
+                {
+                    <img src="~/images/@item.FImagePath" class="card-img-top" style="height: 200px; object-fit: cover;" />
+                }
+                else
+                {
+                    <div class="text-center p-3 text-muted">無圖片</div>
+                }
+
+                <div class="card-body">
+                    <h5 class="card-title">@item.FName</h5>
+                    <p class="card-text text-danger fw-bold">NT$ @item.FPrice?.ToString("N0")</p>
+                    <p class="card-text text-truncate">@item.FDescription</p>
+                </div>
+
+                <div class="card-footer text-end">
+                    <a class="btn btn-sm btn-outline-secondary" asp-action="Details" asp-route-id="@item.FId">
+                        詳細資訊
+                    </a>
+                    <a class="btn btn-sm btn-primary"
+                       asp-action="AddToCart"
+                       asp-route-id="@item.FId">
+                        加入購物車
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
